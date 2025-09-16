@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css">
+		<style>
+			.required::before {
+				/* 星号内容 */
+				content: "*";
+					/* 红色 */
+				color: #ff0000;
+				/* 与文字保持一点距离 */
+				margin-right: 4px;
+			/* 星号加粗 */
+				font-weight: bold;				
+			}
+			body{
+				background-image: url("../css/beijing.png");
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-position: center;
+				background-size: 1700px;
+			}
+			h1{
+				text-align: center;
+			}
+			.layui-form{
+				width: 600px;
+				margin: 0 auto;
+			}
+			.layui-select,
+			.layui-textarea,
+			.layui-input{
+				width: 400px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<h1>注册用户</h1>
+		<div class="layui-form" >
+			<div class="layui-form-item">
+				<label class="layui-form-label required">用户名</label>
+				<div class="layui-input-block">
+				<input id="username" type="text" name="username" class="layui-input" lay-verify="required"
+					lay-reqtext="用户名不能为空!" placeholder="请输入用户名">
+					</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label required">密码</label>
+				<div class="layui-input-block">
+				   <input id="userpsw" type="text" name="userpsw" class="layui-input" lay-verify="required"
+					lay-reqtext="密码不能为空!">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label required">手机号码</label>
+				<div class="layui-input-block">
+				   <input id="userpsw" type="text" name="userspsw" class="layui-input" lay-verify="required"
+					lay-reqtext="手机号码不能为空!">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label required">籍贯</label>
+				<div class="layui-input-block">
+					<select lay-verify="required">
+						<option value="1">河北省</option>
+						<option value="2">山西省</option>
+						<option value="3">辽宁省</option>
+						<option value="4">吉林省</option>
+						<option value="5">黑龙江省</option>
+						<option value="6">江苏省</option>
+						<option value="7">安徽省</option>
+						<option value="8">福建省</option>
+						<option value="9">江西省</option>
+						<option value="10">山东省</option>
+						<option value="11">河南省</option>
+						<option value="12">湖北省</option>
+						<option value="13">湖南省</option>
+						<option value="14">广东省</option>
+						<option value="15">河南省</option>
+						<option value="16">四川省</option>
+						<option value="17">贵州省</option>
+						<option value="18">云南省</option>
+						<option value="19">陕西省</option>
+						<option value="20">甘肃省</option>
+						<option value="21">青海省</option>
+						<option value="22">台湾省</option>
+						<option value="23">浙江省</option>
+						<option value="24">内蒙古自治区</option>
+						<option value="25">广西壮族自治区</option>
+						<option value="26">西藏自治区</option>
+						<option value="27">宁夏回族自治区</option>
+						<option value="28">新疆维吾尔族自治区</option>
+						<option value="29">北京市</option>
+						<option value="30">天津市</option>
+						<option value="31">上海市</option>
+						<option value="32">重庆市</option>
+						<option value="33">香港特别行政区</option>
+						<option value="34">澳门特别行政区</option>
+					</select>
+				</div>
+			</div><!-- 省份下拉选择结束-->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">性别</label>
+				<div class="layui-input-block">
+					<input type="radio" name="sex" value="男" title="男" checked="">
+					<input type="radio" name="sex" value="女" title="女">
+					<input type="radio" name="sex" value="隐藏" title="隐藏">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">阅读偏好</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="intrest" lay-skin="primary" title="文学" checked>
+					<input type="checkbox" name="intrest" lay-skin="primary" title="历史学">
+					<input type="checkbox" name="intrest" lay-skin="primary" title="哲学">
+					<input type="checkbox" name="intrest" lay-skin="primary" title="经济学">
+					<input type="checkbox" name="intrest" lay-skin="primary" title="法学">
+					<input type="checkbox" name="intrest" lay-skin="primary" title="理学"><br>
+					<input type="checkbox" name="intrest" lay-skin="primary" title="工学">
+					<input type="checkbox" name="intrest" lay-skin="primary" title="医学">
+					<input type="checkbox" name="intrest" lay-skin="primary" title="教育学">
+					<input type="checkbox" name="intrest" lay-skin="primary" title="艺术学">
+					<input type="checkbox" name="intrest" lay-skin="primary" title="哲学">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">简介</label>
+				<div class="layui-input-block">
+					<textarea   name="remark" class="layui-textarea" placeholder="让更多阅读搭子认识一下你吧!"></textarea>
+				</div>
+			</div> <!-- 文本域结束 -->
+			
+				<div class="layui-form-item">
+				<label class="layui-form-label required"></label>
+				<div class="layui-input-block">
+				<input type="checkbox" id="pro" name="agree" lay-verify="required" lay-reqtext="必须同意协议" title="我已阅读并同意《用户使用协议》《隐私政策》"/> 
+				</div>
+			</div>
+			</form>
+			
+			<!-- 提交按钮 -->
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+					
+				</div>
+			</div><!-- 提交按钮结束 -->
+		</div>	
+		<script src="../lib/layui-v2.6.3/layui.js">
+			form.on('submit(login)', function (data) {
+			    data = data.field;
+			    if (data.username == '') {
+			        layer.msg('用户名不能为空');
+			        return false;
+			    }
+			    if (data.password == '') {
+			        layer.msg('密码不能为空');
+			        return false;
+			    }
+			    if (data.captcha == '') {
+			        layer.msg('验证码不能为空');
+			        return false;
+			    }
+			    layer.msg('登录成功', function () {
+			        window.location = '../index.html';
+			    });
+			    return false;
+			});
+		</script>	 
+	</body>
+</html>

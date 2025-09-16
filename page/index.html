@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>搜索引擎</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#ef4444',
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .search-item-hover {
+                @apply transition-all duration-300 hover:bg-gray-800/20 hover:pl-2;
+            }
+            .hot-tag {
+                @apply inline-flex items-center justify-center w-5 h-5 rounded-full bg-accent text-white text-xs mr-2 flex-shrink-0;
+            }
+            .stat-item {
+                @apply flex justify-between py-2 border-b border-gray-200/30;
+            }
+        }
+
+        body {
+            background-image: url("css/beijing.png"); 
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 50px 0;
+            color: #000000;
+        }
+
+        .search-container {
+            width: 600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            height: 44px;
+            padding: 0 16px;
+            border: 1px solid rgba(136, 136, 136, 0.6);
+            border-right: none;
+            border-radius: 22px 0 0 22px;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #000000;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: rgba(136, 136, 136, 0.9);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .search-btn {
+            width: 100px;
+            height: 44px;
+            border: 1px solid rgba(136, 136, 136, 0.6);
+            border-left: none;
+            border-radius: 0 22px 22px 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #000000;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .search-input::placeholder {
+            color: #ffffff;
+        }
+
+        .grid-container {
+            width: 1200px;
+            margin: 30px auto 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .grid-item {
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(136, 136, 136, 0.6);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .grid-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .grid-item h3 {
+            margin: 0 0 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            color: #000000;
+        }
+
+        .grid-item h3 i {
+            margin-right: 8px;
+            opacity: 0.8;
+            color: #000000;
+        }
+
+        .grid-item p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.5;
+            color: #000000;
+        }
+
+        .stat-section {
+            margin-bottom: 15px;
+        }
+        
+        .stat-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .stat-section h4 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .hot-searches {
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .search-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: calc(100% - 40px);
+            overflow-y: auto;
+        }
+
+        .search-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(136, 136, 136, 0.1);
+            display: flex;
+            align-items: center;
+            color: #000000;
+        }
+
+        .search-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feedback-form .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .feedback-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .feedback-form input,
+        .feedback-form textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid rgba(136, 136, 136, 0.6);
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #000000;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        .feedback-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .feedback-form button {
+            background-color: rgba(239, 68, 68, 0.8);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .feedback-form button:hover {
+            background-color: rgba(239, 68, 68, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" class="search-input" id="searchInput" placeholder="请输入搜索内容...">
+        <button class="search-btn" id="searchBtn">
+            <i class="fa fa-search"></i> 搜索
+        </button>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-item hot-searches">
+            <h3><i class="fa fa-fire"></i>热门搜索</h3>
+            <ul class="search-list">
+                <li class="search-item-hover">
+                    <span class="hot-tag">1</span>
+                    量子通信技术在未来网络架构中的应用前景
+                </li>
+                <li class="search-item-hover">
+                    <span class="hot-tag">2</span>
+                    《资本论》对当代经济理论与实践的深远影响
+                </li>
+                <li class="search-item-hover">
+                    <span class="hot-tag">3</span>
+                    人工智能算法优化与创新发展趋势
+                </li>
+                <li class="search-item-hover">
+                    <span class="inline-block w-5 h-5 mr-2"></span>
+                    中国古代文学经典作品中的文化内涵挖掘
+                </li>
+                <li class="search-item-hover">
+                    <span class="inline-block w-5 h-5 mr-2"></span>
+                    大数据驱动下的精准医疗模式探索
+                </li>
+                <li class="search-item-hover">
+                    <span class="inline-block w-5 h-5 mr-2"></span>
+                    新能源材料研发的关键技术与挑战
+                </li>
+                <li class="search-item-hover">
+                    <span class="inline-block w-5 h-5 mr-2"></span>
+                    社会学视角下的社会分层与流动机制研究
+                </li>
+            </ul>
+        </div>
+
+        <div class="grid-item">
+            <h3><i class="fa fa-bell"></i>系统公告</h3>
+            <ul class="search-list">
+               <li class="search-item-hover">
+                   <span class="inline-block w-5 h-5 mr-2"></span>
+                   本系统将在下周六进行更新
+               </li>
+			   <li class="search-item-hover">
+                    <span class="inline-block w-5 h-5 mr-2"></span>
+                    官方将举办文学杯比赛
+                </li>
+                <li class="search-item-hover">
+                    <span class="inline-block w-5 h-5 mr-2"></span>
+                    近一个月注册用户增多
+                </li>
+                <li class="search-item-hover">
+                    <span class="inline-block w-5 h-5 mr-2"></span>
+                    官方将在年底给本年度读书时间最长的用户定制纪念奖品
+                </li>
+			</ul>
+        </div>
+
+        <div class="grid-item">
+            <h3><i class="fa fa-link"></i>数据统计</h3>
+
+            <div class="stat-section">
+                <h4>书籍统计</h4>
+                <div class="stat-item">
+                    <span>总藏书量</span>
+                    <span>12,548 本</span>
+                </div>
+                <div class="stat-item">
+                    <span>本月新增</span>
+                    <span>246 本</span>
+                </div>
+                <div class="stat-item">
+                    <span>热门类别</span>
+                    <span>社会科学</span>
+                </div>
+                <div class="stat-item">
+                    <span>本月借阅量</span>
+                    <span>1,892 次</span>
+                </div>
+            </div>
+            
+            <div class="stat-section">
+                <h4>学习小组统计</h4>
+                <div class="stat-item">
+                    <span>小组总数</span>
+                    <span>328 个</span>
+                </div>
+                <div class="stat-item">
+                    <span>本月新增</span>
+                    <span>15 个</span>
+                </div>
+                <div class="stat-item">
+                    <span>活跃人数</span>
+                    <span>5,642 人</span>
+                </div>
+                <div class="stat-item">
+                    <span>讨论主题数</span>
+                    <span>2,156 个</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <h3><i class="fa fa-cog"></i>反馈建议</h3>
+            <form class="feedback-form">
+                <div class="form-group">
+                    <label for="feedback-type">反馈类型</label>
+                    <input type="text" id="feedback-type" placeholder="例如：功能建议、内容错误等">
+                </div>
+                <div class="form-group">
+                    <label for="feedback-content">反馈内容</label>
+                    <textarea id="feedback-content" placeholder="请详细描述您的建议或遇到的问题..."></textarea>
+                </div>
+                <button type="button" id="submit-feedback">提交反馈</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const submitFeedbackBtn = document.getElementById('submit-feedback');
+
+        searchBtn.addEventListener('click', checkInput);
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                checkInput();
+            }
+        });
+
+        function checkInput() {
+            const searchText = searchInput.value.trim();
+            if (searchText === '') {
+                alert('请输入要搜索的内容~');
+            } else {
+                alert(`正在搜索: ${searchText}`);
+            }
+        }
+
+        document.querySelectorAll('.search-list li').forEach(item => {
+            item.addEventListener('click', () => {
+                const text = item.textContent.trim().replace(/^\d+/, '').trim();
+                searchInput.value = text;
+            });
+        });
+
+        submitFeedbackBtn.addEventListener('click', function() {
+            const feedbackType = document.getElementById('feedback-type').value.trim();
+            const feedbackContent = document.getElementById('feedback-content').value.trim();
+            
+            if (!feedbackType || !feedbackContent) {
+                alert('请填写反馈类型和内容');
+                return;
+            }
+            
+            alert('感谢您的反馈！我们会认真处理您的建议。');
+            document.querySelector('.feedback-form').reset();
+        });
+    </script>
+</body>
+</html>
+    
