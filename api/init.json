@@ -1,0 +1,97 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "page/index.html"
+  },
+  "logoInfo": {
+    "title": "SSYQ",
+    "image": "images/logo.png",
+    "href": "" 
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "", 
+      "target": "_self",
+      "child": [
+        {
+          "title": "首页",
+          "href": "home.html",
+          "icon": "fa fa-home", 
+          "target": "_self"
+        },
+        {
+          "title": "学术动态",
+          "href": "modle1.html",  
+          "icon": "fa fa-newspaper-o",  
+          "target": "_self"
+        },
+        {
+          "title": "学习社区",
+          "href": "",  
+          "icon": "fa fa-institution",
+          "target": "_self",
+          "child": [
+            {
+              "title": "学术话题讨论",
+              "href": "modle2-1.html",  
+              "icon": "",  
+              "target": "_self"
+            },
+            {
+              "title": "问题求助与解答",
+              "href": "modle2-2.html",
+              "icon": "",
+              "target": "_self"
+            },
+            {
+              "title": "经验分享",
+              "href": "modle2-3.html",
+              "icon": "",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "资源导航",
+          "href": "modle3.html",
+          "icon": "fa fa-compass",  
+          "target": "_self"
+        },
+        {
+          "title": "学习小组",
+          "href": "",
+          "icon": "fa fa-users",  
+          "target": "_self",
+          "child": [
+            {
+              "title": "学习小组",
+              "href": "modle4-1.html",
+              "icon": "fa fa-plus-square-o",
+              "target": "_self"
+            },
+            {
+              "title": "我的小组",
+              "href": "modle4-2.html",
+              "icon": "fa fa-search",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "学习管理",
+          "href": "modle5.html",  
+          "icon": "fa fa-pencil-square-o",
+          "target": "_self"
+        },
+        {
+          "title": "个人中心",
+          "href": "modle6.html",
+          "icon": "fa fa-user", 
+          "target": "_self"
+        }
+      ]
+    }
+  ]
+}
