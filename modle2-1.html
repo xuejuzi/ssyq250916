@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术话题讨论 - 学习社区</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        light: '#F5F7FA',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-image: url("css/beijing.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover; 
+            background-color: #f9fafb; 
+        }
+        
+        .topic-item {
+            transition: all 0.3s ease;
+        }
+        .topic-item:hover {
+            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .filter-tag {
+            transition: all 0.2s ease;
+        }
+        .filter-tag:hover, .filter-tag.active {
+            background-color: #165DFF;
+            color: white;
+        }
+        
+        .pagination-btn {
+            transition: all 0.2s ease;
+        }
+        .pagination-btn:hover:not(.active):not(:disabled) {
+            border-color: #165DFF;
+            color: #165DFF;
+        }
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="container mx-auto px-4 py-6">
+        <div class="flex items-center">
+            <i class="fa fa-comments text-primary text-2xl mr-3"></i>
+            <span class="font-bold text-2xl text-primary">学术话题讨论</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 pb-12">
+        
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-3">参与学术讨论，拓展研究视野</h2>
+            <p class="text-gray-600">
+                在这里，您可以发起或参与各类学术话题的讨论，与同行交流思想、碰撞火花，
+                拓宽研究思路，获取新的视角和灵感。
+            </p>
+        </div>
+        
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-4 mb-6">
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm text-gray-600">话题分类：</span>
+                <span class="filter-tag active px-3 py-1 bg-light text-sm rounded-full cursor-pointer">全部话题</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">研究方法</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">学术前沿</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">学科交叉</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">学术伦理</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">科研政策</span>
+            </div>
+        </div>
+        
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-5 mb-6">
+            <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                <i class="fa fa-pencil text-primary mr-2"></i>发起新话题
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div class="md:col-span-3">
+                    <label class="block text-xs text-gray-500 mb-1">话题标题</label>
+                    <input type="text" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary" placeholder="请输入引人深思的话题标题">
+                </div>
+                <div class="md:col-span-3">
+                    <label class="block text-xs text-gray-500 mb-1">话题内容</label>
+                    <textarea class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary" rows="4" placeholder="请详细阐述话题背景、您的观点和希望讨论的方向..."></textarea>
+                </div>
+                <div class="md:col-span-1">
+                    <label class="block text-xs text-gray-500 mb-1">话题分类</label>
+                    <select class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                        <option>请选择分类</option>
+                        <option>研究方法</option>
+                        <option>学术前沿</option>
+                        <option>学科交叉</option>
+                        <option>学术伦理</option>
+                        <option>科研政策</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button class="px-4 py-2 bg-primary text-white text-sm rounded hover:bg-primary/90 transition-colors">
+                    <i class="fa fa-paper-plane mr-1"></i> 发布话题
+                </button>
+            </div>
+        </div>
+        
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden">
+            <div class="bg-primary/10 px-5 py-3 border-b border-primary/20">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-primary flex items-center">
+                        <i class="fa fa-comments-o mr-2"></i>热门话题讨论
+                    </h3>
+                    <div class="flex space-x-2">
+                        <button class="text-xs text-primary hover:underline"><i class="fa fa-sort-amount-desc mr-1"></i>最新</button>
+                        <button class="text-xs text-gray-500 hover:text-primary"><i class="fa fa-reply mr-1"></i>回复最多</button>
+                        <button class="text-xs text-gray-500 hover:text-primary"><i class="fa fa-eye mr-1"></i>浏览最多</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-5">
+                
+                <div id="topicList" class="space-y-4">
+                    
+                </div>
+                
+                <div class="flex justify-center mt-6">
+                    <div class="flex space-x-1" id="paginationControls">
+                        <button id="prevPage" class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500" disabled>
+                            <i class="fa fa-angle-left"></i>
+                        </button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded bg-primary text-white active" data-page="1">1</button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200" data-page="2">2</button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200" data-page="3">3</button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200" data-page="4">4</button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200" data-page="5">5</button>
+                        <button id="nextPage" class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500">
+                            <i class="fa fa-angle-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                goToPage(1); // 切换分类时重置到第一页
+            });
+        });
+        
+        let currentPage = 1;
+        const totalPages = 5;
+        const topicsPerPage = 4;
+       
+        const topicData = [
+            
+            [
+                {
+                    title: "如何评价质性研究与量化研究的优劣？",
+                    author: "张教授",
+                    time: "2小时前",
+                    replies: 42,
+                    views: 356,
+                    tags: ["研究方法", "学术讨论"]
+                },
+                {
+                    title: "学术论文写作中如何有效组织参考文献？",
+                    author: "李博士",
+                    time: "昨天",
+                    replies: 28,
+                    views: 278,
+                    tags: ["论文写作", "参考文献"]
+                },
+                {
+                    title: "开放获取期刊的质量是否值得信赖？",
+                    author: "王编辑",
+                    time: "3天前",
+                    replies: 56,
+                    views: 412,
+                    tags: ["开放获取", "期刊评价"]
+                },
+                {
+                    title: "人工智能在学术研究中的应用前景与挑战",
+                    author: "刘教授",
+                    time: "3天前",
+                    replies: 37,
+                    views: 329,
+                    tags: ["人工智能", "学术前沿"]
+                }
+            ],
+            
+            [
+                {
+                    title: "跨学科研究是否是未来学术发展的主流方向？",
+                    author: "陈教授",
+                    time: "4天前",
+                    replies: 29,
+                    views: 267,
+                    tags: ["跨学科", "学术趋势"]
+                },
+                {
+                    title: "如何平衡教学与科研的关系？",
+                    author: "林博士",
+                    time: "5天前",
+                    replies: 41,
+                    views: 389,
+                    tags: ["教学科研", "职业发展"]
+                },
+                {
+                    title: "学术评价体系改革的方向与建议",
+                    author: "赵教授",
+                    time: "1周前",
+                    replies: 63,
+                    views: 521,
+                    tags: ["学术评价", "科研政策"]
+                },
+                {
+                    title: "大数据时代对传统研究方法的挑战",
+                    author: "孙博士",
+                    time: "1周前",
+                    replies: 35,
+                    views: 298,
+                    tags: ["大数据", "研究方法"]
+                }
+            ],
+            
+            [
+                {
+                    title: "国际合作研究的利与弊分析",
+                    author: "周教授",
+                    time: "1周前",
+                    replies: 24,
+                    views: 231,
+                    tags: ["国际合作", "学术交流"]
+                },
+                {
+                    title: "青年学者如何突破科研瓶颈期？",
+                    author: "吴博士",
+                    time: "2周前",
+                    replies: 47,
+                    views: 402,
+                    tags: ["青年学者", "职业发展"]
+                },
+                {
+                    title: "学术会议在数字时代的价值与变革",
+                    author: "郑教授",
+                    time: "2周前",
+                    replies: 19,
+                    views: 187,
+                    tags: ["学术会议", "学术交流"]
+                },
+                {
+                    title: "如何培养研究生的学术创新能力？",
+                    author: "冯教授",
+                    time: "2周前",
+                    replies: 38,
+                    views: 345,
+                    tags: ["研究生培养", "创新能力"]
+                }
+            ],
+            
+            [
+                {
+                    title: "科研数据共享的伦理与规范",
+                    author: "韩博士",
+                    time: "3周前",
+                    replies: 26,
+                    views: 215,
+                    tags: ["数据共享", "学术伦理"]
+                },
+                {
+                    title: "人文社科研究是否需要更多的实证方法？",
+                    author: "杨教授",
+                    time: "3周前",
+                    replies: 52,
+                    views: 489,
+                    tags: ["人文社科", "研究方法"]
+                },
+                {
+                    title: "学术出版模式的未来发展趋势",
+                    author: "朱编辑",
+                    time: "3周前",
+                    replies: 23,
+                    views: 201,
+                    tags: ["学术出版", "开放获取"]
+                },
+                {
+                    title: "如何构建健康的学术竞争与合作关系？",
+                    author: "胡教授",
+                    time: "4周前",
+                    replies: 31,
+                    views: 276,
+                    tags: ["学术生态", "学术伦理"]
+                }
+            ],
+            
+            [
+                {
+                    title: "新兴技术对社会科学理论的影响",
+                    author: "马博士",
+                    time: "1个月前",
+                    replies: 28,
+                    views: 243,
+                    tags: ["新兴技术", "社会科学"]
+                },
+                {
+                    title: "如何提高学术论文的可读性和影响力？",
+                    author: "郭教授",
+                    time: "1个月前",
+                    replies: 43,
+                    views: 398,
+                    tags: ["论文写作", "学术传播"]
+                },
+                {
+                    title: "科研团队多元化对创新的影响",
+                    author: "何教授",
+                    time: "1个月前",
+                    replies: 17,
+                    views: 165,
+                    tags: ["团队管理", "科研创新"]
+                },
+                {
+                    title: "后疫情时代学术交流模式的转变",
+                    author: "高博士",
+                    time: "1个月前",
+                    replies: 29,
+                    views: 256,
+                    tags: ["学术交流", "科研趋势"]
+                }
+            ]
+        ];
+        
+        function initPagination() {
+            
+            document.querySelectorAll('.pagination-btn[data-page]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = parseInt(this.getAttribute('data-page'));
+                    goToPage(page);
+                });
+            });
+            
+            document.getElementById('prevPage').addEventListener('click', () => {
+                if (currentPage > 1) goToPage(currentPage - 1);
+            });
+            
+            document.getElementById('nextPage').addEventListener('click', () => {
+                if (currentPage < totalPages) goToPage(currentPage + 1);
+            });
+            
+            renderTopicList();
+            updatePaginationState();
+        }
+        
+        function goToPage(page) {
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            renderTopicList();
+            updatePaginationState();
+			
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+			}
+        
+        function updatePaginationState() {
+            
+            document.querySelectorAll('.pagination-btn[data-page]').forEach(btn => {
+                const page = parseInt(btn.getAttribute('data-page'));
+                if (page === currentPage) {
+                    btn.classList.add('bg-primary', 'text-white', 'active');
+                    btn.classList.remove('border', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'active');
+                    btn.classList.add('border', 'border-gray-200');
+                }
+            });
+            
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+            
+            prevBtn.classList.toggle('opacity-50', currentPage === 1);
+            prevBtn.classList.toggle('cursor-not-allowed', currentPage === 1);
+            nextBtn.classList.toggle('opacity-50', currentPage === totalPages);
+            nextBtn.classList.toggle('cursor-not-allowed', currentPage === totalPages);
+        }
+        
+        function renderTopicList() {
+            const listContainer = document.getElementById('topicList');
+            listContainer.innerHTML = '';
+            
+            const currentTopics = topicData[currentPage - 1];
+            
+            currentTopics.forEach(topic => {
+                const topicHTML = `
+                <div class="topic-item p-4 rounded-lg border border-gray-100">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                            <i class="fa fa-user text-primary"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-800 hover:text-primary cursor-pointer transition-colors">
+                                ${topic.title}
+                            </h4>
+                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">
+                                这是一个关于${topic.title}的深入讨论，欢迎分享您的观点和经验，共同探讨该话题的各个方面...
+                            </p>
+                            <div class="flex flex-wrap items-center mt-3 gap-x-4 gap-y-2">
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <span><i class="fa fa-user mr-1"></i> ${topic.author}</span>
+                                    <span class="mx-2">•</span>
+                                    <span><i class="fa fa-clock-o mr-1"></i> ${topic.time}</span>
+                                </div>
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <span><i class="fa fa-eye mr-1"></i> ${topic.views}浏览</span>
+                                    <span class="mx-2">•</span>
+                                    <span><i class="fa fa-reply mr-1"></i> ${topic.replies}回复</span>
+                                </div>
+                                <div class="flex flex-wrap gap-1 ml-auto">
+                                    ${topic.tags.map(tag => `<span class="px-2 py-0.5 bg-light/80 text-gray-600 text-xs rounded">${tag}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+                listContainer.innerHTML += topicHTML;
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', initPagination);
+    </script>
+</body>
+</html>

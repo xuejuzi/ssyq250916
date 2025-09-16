@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习小组</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        light: '#F5F7FA',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-image: url("css/beijing.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover; 
+            background-color: #f9fafb; 
+        }
+        
+        .group-card {
+            transition: all 0.3s ease;
+        }
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .tab-active {
+            border-bottom: 2px solid #165DFF;
+            color: #165DFF;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    
+    <header class="container mx-auto px-4 py-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fa fa-users text-primary text-2xl mr-3"></i>
+                <span class="font-bold text-2xl text-primary">学习小组</span>
+            </div>
+            <button class="px-4 py-2 bg-primary text-white text-sm rounded hover:bg-primary/90 transition-colors">
+                <i class="fa fa-plus mr-1"></i> 创建小组
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 pb-12">
+        
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-3">协同学习，共同进步</h2>
+            <p class="text-gray-600">
+                浏览公开小组或申请加入非公开小组，与志同道合的研究者共同探讨学术问题、共享研究资源、协作完成研究项目，
+                提升学术能力和研究效率。
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 text-center">
+                <div class="text-3xl font-bold text-primary mb-1">248</div>
+                <div class="text-sm text-gray-600">活跃小组</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 text-center">
+                <div class="text-3xl font-bold text-primary mb-1">1,562</div>
+                <div class="text-sm text-gray-600">小组成员</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 text-center">
+                <div class="text-3xl font-bold text-primary mb-1">3,741</div>
+                <div class="text-sm text-gray-600">共享资源</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 text-center">
+                <div class="text-3xl font-bold text-primary mb-1">8,925</div>
+                <div class="text-sm text-gray-600">学术讨论</div>
+            </div>
+        </div>
+        
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm mb-6">
+            <div class="flex border-b border-gray-100">
+                <button id="publicTab" class="tab-btn tab-active px-6 py-3 text-sm transition-colors" onclick="switchTab('public')">
+                    <i class="fa fa-globe mr-1"></i> 公开小组 (186)
+                </button>
+                <button id="privateTab" class="tab-btn px-6 py-3 text-sm text-gray-500 transition-colors" onclick="switchTab('private')">
+                    <i class="fa fa-lock mr-1"></i> 非公开小组 (62)
+                </button>
+            </div>
+            
+            <div id="publicContent" class="tab-content p-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <div class="group-card p-4 rounded-lg border border-gray-100 bg-white/90">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800 hover:text-primary cursor-pointer transition-colors">
+                                自然语言处理研究组
+                            </h4>
+                            <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded">公开</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1 line-clamp-2 mb-3">
+                            专注于自然语言处理、大语言模型及相关应用研究，分享最新研究成果和技术进展。
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fa fa-user mr-1"></i> 24名成员
+                                <span class="mx-2">•</span>
+                                <i class="fa fa-clock-o mr-1"></i> 上周活跃
+                            </div>
+                            <button class="text-xs text-primary hover:underline">直接加入</button>
+                        </div>
+                    </div>
+                    
+                    <div class="group-card p-4 rounded-lg border border-gray-100 bg-white/90">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800 hover:text-primary cursor-pointer transition-colors">
+                                学术论文写作交流
+                            </h4>
+                            <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded">公开</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1 line-clamp-2 mb-3">
+                            分享论文写作经验、投稿技巧，互相评阅论文，共同提高学术写作水平。
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fa fa-user mr-1"></i> 56名成员
+                                <span class="mx-2">•</span>
+                                <i class="fa fa-clock-o mr-1"></i> 昨天活跃
+                            </div>
+                            <button class="text-xs text-primary hover:underline">直接加入</button>
+                        </div>
+                    </div>
+                    
+                    <div class="group-card p-4 rounded-lg border border-gray-100 bg-white/90">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800 hover:text-primary cursor-pointer transition-colors">
+                                科研工具与效率提升
+                            </h4>
+                            <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded">公开</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1 line-clamp-2 mb-3">
+                            分享各类科研工具使用技巧，探讨提升科研效率的方法和经验。
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fa fa-user mr-1"></i> 42名成员
+                                <span class="mx-2">•</span>
+                                <i class="fa fa-clock-o mr-1"></i> 3天前活跃
+                            </div>
+                            <button class="text-xs text-primary hover:underline">直接加入</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button class="px-4 py-2 border border-primary text-primary text-sm rounded hover:bg-primary/5 transition-colors">
+                        加载更多公开小组
+                    </button>
+                </div>
+            </div>
+            
+            <div id="privateContent" class="tab-content p-5 hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <div class="group-card p-4 rounded-lg border border-gray-100 bg-white/90">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800 hover:text-primary cursor-pointer transition-colors">
+                                人工智能伦理研究
+                            </h4>
+                            <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded">非公开</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1 line-clamp-2 mb-3">
+                            探讨人工智能发展带来的伦理挑战和社会影响，研究AI伦理规范和治理框架（需审核）。
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fa fa-user mr-1"></i> 18名成员
+                                <span class="mx-2">•</span>
+                                <i class="fa fa-user-circle mr-1"></i> 李教授（组长）
+                            </div>
+                            <button class="text-xs text-secondary hover:underline">申请加入</button>
+                        </div>
+                    </div>
+                    
+                    <div class="group-card p-4 rounded-lg border border-gray-100 bg-white/90">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800 hover:text-primary cursor-pointer transition-colors">
+                                数字人文研究前沿
+                            </h4>
+                            <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded">非公开</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1 line-clamp-2 mb-3">
+                            探索数字技术在人文研究中的应用，分享数字人文项目案例和研究方法（限课题组成员）。
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fa fa-user mr-1"></i> 27名成员
+                                <span class="mx-2">•</span>
+                                <i class="fa fa-user-circle mr-1"></i> 王研究员（组长）
+                            </div>
+                            <button class="text-xs text-secondary hover:underline">申请加入</button>
+                        </div>
+                    </div>
+                    
+                    <div class="group-card p-4 rounded-lg border border-gray-100 bg-white/90">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium text-gray-800 hover:text-primary cursor-pointer transition-colors">
+                                医疗数据隐私保护
+                            </h4>
+                            <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded">非公开</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1 line-clamp-2 mb-3">
+                            研究医疗数据安全与隐私保护技术，仅限相关领域研究者加入（需提供资质证明）。
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fa fa-user mr-1"></i> 12名成员
+                                <span class="mx-2">•</span>
+                                <i class="fa fa-user-circle mr-1"></i> 张博士（组长）
+                            </div>
+                            <button class="text-xs text-secondary hover:underline">申请加入</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <button class="px-4 py-2 border border-primary text-primary text-sm rounded hover:bg-primary/5 transition-colors">
+                        加载更多非公开小组
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden mb-6">
+            <div class="bg-green-100 px-5 py-3 border-b border-green-200">
+                <h3 class="font-bold text-green-600 flex items-center">
+                    <i class="fa fa-share-alt mr-2"></i>热门共享资源
+                </h3>
+            </div>
+            <div class="p-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    
+                    <div class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-white/90 transition-colors">
+                        <i class="fa fa-file-pdf-o text-red-500 text-lg mr-3"></i>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-800">2023年自然语言处理顶会论文合集</h4>
+                            <div class="text-xs text-gray-500 mt-1">自然语言处理研究组 • 今天</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-white/90 transition-colors">
+                        <i class="fa fa-file-powerpoint-o text-orange-500 text-lg mr-3"></i>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-800">学术演讲PPT制作技巧与模板</h4>
+                            <div class="text-xs text-gray-500 mt-1">学术论文写作交流 • 昨天</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function switchTab(tabType) {
+            const publicTab = document.getElementById('publicTab');
+            const privateTab = document.getElementById('privateTab');
+            const publicContent = document.getElementById('publicContent');
+            const privateContent = document.getElementById('privateContent');
+            
+            if (tabType === 'public') {
+                publicTab.classList.add('tab-active');
+                privateTab.classList.remove('tab-active');
+                publicContent.classList.remove('hidden');
+                privateContent.classList.add('hidden');
+            } else {
+                privateTab.classList.add('tab-active');
+                publicTab.classList.remove('tab-active');
+                privateContent.classList.remove('hidden');
+                publicContent.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        light: '#F5F7FA',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* 背景图配置，与其他页面保持一致 */
+        body {
+            background-image: url("css/beijing.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover; 
+            background-color: #f9fafb; 
+        }
+        /* 若本地背景图路径错误，可注释上方body样式，启用下方在线图 */
+        /* body {
+            background-image: url("https://picsum.photos/id/20/1920/1080");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        } */
+        
+        /* 卡片悬停效果 */
+        .item-card {
+            transition: all 0.2s ease;
+        }
+        .item-card:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* 标签样式 */
+        .tag-item {
+            transition: all 0.2s ease;
+        }
+        .tag-item:hover {
+            background-color: rgba(22, 93, 255, 0.1);
+            color: #165DFF;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 顶部标题区域 -->
+    <header class="container mx-auto px-4 py-6">
+        <div class="flex items-center">
+            <i class="fa fa-user-circle text-primary text-2xl mr-3"></i>
+            <span class="font-bold text-2xl text-primary">个人中心</span>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="container mx-auto px-4 pb-12">
+        <!-- 个人信息概览 -->
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-6 mb-8">
+            <div class="flex flex-col md:flex-row items-center">
+                <!-- 头像区域 -->
+                <div class="mb-6 md:mb-0 md:mr-6">
+                    <div class="relative w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-sm">
+                        <img src="css/xiaomei.jpg" alt="用户头像" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                
+                <!-- 基本信息 -->
+                <div class="flex-1 text-center md:text-left">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800 mb-1">小美</h2>
+                        </div>
+                        <button class="px-4 py-2 border border-primary text-primary rounded text-sm hover:bg-primary/5 transition-colors self-center md:self-auto">
+                            <i class="fa fa-pencil mr-1"></i> 编辑资料
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                        <div class="text-center">
+                            <div class="text-lg font-bold text-primary">28</div>
+                            <div class="text-xs text-gray-500">收藏文献</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-lg font-bold text-primary">12</div>
+                            <div class="text-xs text-gray-500">关注学者</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-lg font-bold text-primary">3</div>
+                            <div class="text-xs text-gray-500">加入小组</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-lg font-bold text-primary">168</div>
+                            <div class="text-xs text-gray-500">浏览记录</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主要功能区 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- 个人资料管理 -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-primary/10 px-5 py-3 border-b border-primary/20">
+                    <h3 class="font-bold text-primary flex items-center">
+                        <i class="fa fa-id-card-o mr-2"></i>个人资料管理
+                    </h3>
+                </div>
+                
+                <div class="p-5">
+                    <form>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs text-gray-500 mb-1">昵称</label>
+                                <input type="text" value="小美" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-xs text-gray-500 mb-1">电子邮箱</label>
+                                <input type="email" value="zhangming@example.edu.cn" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-xs text-gray-500 mb-1">籍贯</label>
+                                <input type="text" value="山西" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-xs text-gray-500 mb-1">阅读偏好</label>
+                                <input type="text" value="工学,理学" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-xs text-gray-500 mb-1">简介</label>
+                                <textarea rows="3" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">中北大学计算机学院博士研究生，主要研究方向为自然语言处理和大语言模型，发表学术论文5篇，参与国家级科研项目2项。</textarea>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="w-full mt-4 py-2 bg-primary text-white text-sm rounded hover:bg-primary/90 transition-colors">
+                            保存修改
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- 历史记录查看 -->
+            <div class="lg:col-span-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-secondary/10 px-5 py-3 border-b border-secondary/20">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-secondary flex items-center">
+                            <i class="fa fa-history mr-2"></i>历史记录
+                        </h3>
+                        <button class="text-xs text-secondary hover:underline">
+                            清除全部记录
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="p-5">
+                    <!-- 记录分类标签 -->
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <button class="px-3 py-1 bg-secondary/10 text-secondary text-xs rounded-full">
+                            全部记录
+                        </button>
+                        <button class="px-3 py-1 bg-white text-gray-600 text-xs rounded-full hover:bg-gray-100 transition-colors">
+                            文献浏览
+                        </button>
+                        <button class="px-3 py-1 bg-white text-gray-600 text-xs rounded-full hover:bg-gray-100 transition-colors">
+                            搜索记录
+                        </button>
+                        <button class="px-3 py-1 bg-white text-gray-600 text-xs rounded-full hover:bg-gray-100 transition-colors">
+                            小组活动
+                        </button>
+                    </div>
+                    
+                    <!-- 文献浏览记录 -->
+                    <div class="mb-6">
+                        <h4 class="font-medium text-gray-800 mb-3 flex items-center">
+                            <i class="fa fa-file-text-o text-gray-500 mr-2"></i> 文献浏览记录
+                        </h4>
+                        
+                        <div class="space-y-3 max-h-60 overflow-y-auto pr-1">
+                            <!-- 记录1 -->
+                            <div class="item-card p-3 rounded-lg border border-gray-100 flex items-start">
+                                <i class="fa fa-file-pdf-o text-red-500 mt-1 mr-3"></i>
+                                <div class="flex-1">
+                                    <h5 class="font-medium text-gray-800 text-sm">基于注意力机制的大型语言模型研究进展</h5>
+                                    <p class="text-xs text-gray-500 mt-1">Nature Machine Intelligence</p>
+                                </div>
+                                <div class="text-xs text-gray-400 ml-2">
+                                    今天 14:30
+                                </div>
+                            </div>
+                            
+                            <!-- 记录2 -->
+                            <div class="item-card p-3 rounded-lg border border-gray-100 flex items-start">
+                                <i class="fa fa-file-pdf-o text-red-500 mt-1 mr-3"></i>
+                                <div class="flex-1">
+                                    <h5 class="font-medium text-gray-800 text-sm">多模态大模型的发展与跨模态语义理解</h5>
+                                    <p class="text-xs text-gray-500 mt-1">IEEE Transactions on Multimedia</p>
+                                </div>
+                                <div class="text-xs text-gray-400 ml-2">
+                                    昨天 09:15
+                                </div>
+                            </div>
+                            
+                            <!-- 记录3 -->
+                            <div class="item-card p-3 rounded-lg border border-gray-100 flex items-start">
+                                <i class="fa fa-file-pdf-o text-red-500 mt-1 mr-3"></i>
+                                <div class="flex-1">
+                                    <h5 class="font-medium text-gray-800 text-sm">联邦学习在医疗数据隐私保护中的应用</h5>
+                                    <p class="text-xs text-gray-500 mt-1">Nature Communications</p>
+                                </div>
+                                <div class="text-xs text-gray-400 ml-2">
+                                    3天前
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 搜索记录 -->
+                    <div>
+                        <h4 class="font-medium text-gray-800 mb-3 flex items-center">
+                            <i class="fa fa-search text-gray-500 mr-2"></i> 搜索记录
+                        </h4>
+                        
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <div class="tag-item px-3 py-1.5 bg-light rounded-full text-sm text-gray-700 flex items-center">
+                                大语言模型 应用研究
+                                <button class="ml-2 text-gray-400 hover:text-gray-600">
+                                    <i class="fa fa-times-circle"></i>
+                                </button>
+                            </div>
+                            <div class="tag-item px-3 py-1.5 bg-light rounded-full text-sm text-gray-700 flex items-center">
+                                注意力机制 改进
+                                <button class="ml-2 text-gray-400 hover:text-gray-600">
+                                    <i class="fa fa-times-circle"></i>
+                                </button>
+                            </div>
+                            <div class="tag-item px-3 py-1.5 bg-light rounded-full text-sm text-gray-700 flex items-center">
+                                联邦学习 医疗数据
+                                <button class="ml-2 text-gray-400 hover:text-gray-600">
+                                    <i class="fa fa-times-circle"></i>
+                                </button>
+                            </div>
+                            <div class="tag-item px-3 py-1.5 bg-light rounded-full text-sm text-gray-700 flex items-center">
+                                多模态学习 综述
+                                <button class="ml-2 text-gray-400 hover:text-gray-600">
+                                    <i class="fa fa-times-circle"></i>
+                                </button>
+                            </div>
+                            <div class="tag-item px-3 py-1.5 bg-light rounded-full text-sm text-gray-700 flex items-center">
+                                学术论文写作 技巧
+                                <button class="ml-2 text-gray-400 hover:text-gray-600">
+                                    <i class="fa fa-times-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 收藏与关注管理 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- 我的收藏 -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-primary/10 px-5 py-3 border-b border-primary/20">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-primary flex items-center">
+                            <i class="fa fa-bookmark-o mr-2"></i>我的收藏
+                        </h3>
+                        <select class="text-xs border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary px-2 py-1">
+                            <option>全部收藏</option>
+                            <option>文献</option>
+                            <option>话题</option>
+                            <option>资源</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="p-5">
+                    <div class="space-y-3 max-h-80 overflow-y-auto pr-1">
+                        <!-- 收藏1 -->
+                        <div class="item-card p-3 rounded-lg border border-gray-100 flex items-start">
+                            <i class="fa fa-file-pdf-o text-red-500 mt-1 mr-3"></i>
+                            <div class="flex-1">
+                                <h5 class="font-medium text-gray-800 text-sm hover:text-primary cursor-pointer transition-colors">
+                                    大型语言模型的伦理风险与治理框架
+                                </h5>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    <i class="fa fa-folder-o mr-1"></i> 人工智能伦理
+                                    <span class="mx-2">•</span>
+                                    <i class="fa fa-calendar-o mr-1"></i> 2023-04-25
+                                </p>
+                            </div>
+                            <button class="text-gray-400 hover:text-danger transition-colors">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- 收藏2 -->
+                        <div class="item-card p-3 rounded-lg border border-gray-100 flex items-start">
+                            <i class="fa fa-file-powerpoint-o text-orange-500 mt-1 mr-3"></i>
+                            <div class="flex-1">
+                                <h5 class="font-medium text-gray-800 text-sm hover:text-primary cursor-pointer transition-colors">
+                                    学术演讲PPT制作技巧与模板
+                                </h5>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    <i class="fa fa-folder-o mr-1"></i> 学术资源
+                                    <span class="mx-2">•</span>
+                                    <i class="fa fa-calendar-o mr-1"></i> 2023-05-10
+                                </p>
+                            </div>
+                            <button class="text-gray-400 hover:text-danger transition-colors">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- 收藏3 -->
+                        <div class="item-card p-3 rounded-lg border border-gray-100 flex items-start">
+                            <i class="fa fa-comments-o text-green-500 mt-1 mr-3"></i>
+                            <div class="flex-1">
+                                <h5 class="font-medium text-gray-800 text-sm hover:text-primary cursor-pointer transition-colors">
+                                    如何高效阅读学术论文
+                                </h5>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    <i class="fa fa-folder-o mr-1"></i> 学术话题
+                                    <span class="mx-2">•</span>
+                                    <i class="fa fa-calendar-o mr-1"></i> 2023-05-18
+                                </p>
+                            </div>
+                            <button class="text-gray-400 hover:text-danger transition-colors">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full mt-4 py-2 border border-primary text-primary rounded text-sm bg-white/80 hover:bg-primary/5 transition-colors">
+                        查看全部收藏
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 我的关注 -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-secondary/10 px-5 py-3 border-b border-secondary/20">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-secondary flex items-center">
+                            <i class="fa fa-user-plus mr-2"></i>我的关注
+                        </h3>
+                        <select class="text-xs border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-secondary px-2 py-1">
+                            <option>全部关注</option>
+                            <option>学者</option>
+                            <option>小组</option>
+                            <option>话题</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="p-5">
+                    <div class="space-y-3 max-h-80 overflow-y-auto pr-1">
+                        <!-- 关注学者1 -->
+                        <div class="item-card p-3 rounded-lg border border-gray-100 flex items-center">
+                            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+                                <img src="https://picsum.photos/id/91/100/100" alt="李教授头像" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <h5 class="font-medium text-gray-800 text-sm">李教授</h5>
+                                <p class="text-xs text-gray-500">清华大学 | 自然语言处理</p>
+                            </div>
+                            <button class="px-3 py-1 text-xs border border-danger text-danger rounded hover:bg-danger/5 transition-colors">
+                                取消关注
+                            </button>
+                        </div>
+                        
+                        <!-- 关注学者2 -->
+                        <div class="item-card p-3 rounded-lg border border-gray-100 flex items-center">
+                            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+                                <img src="https://picsum.photos/id/92/100/100" alt="王教授头像" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <h5 class="font-medium text-gray-800 text-sm">王教授</h5>
+                                <p class="text-xs text-gray-500">北京大学 | 人工智能</p>
+                            </div>
+                            <button class="px-3 py-1 text-xs border border-danger text-danger rounded hover:bg-danger/5 transition-colors">
+                                取消关注
+                            </button>
+                        </div>
+                        
+                        <!-- 关注小组 -->
+                        <div class="item-card p-3 rounded-lg border border-gray-100 flex items-center">
+                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3">
+                                <i class="fa fa-group text-primary"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h5 class="font-medium text-gray-800 text-sm">自然语言处理研究组</h5>
+                                <p class="text-xs text-gray-500">24名成员 | 活跃中</p>
+                            </div>
+                            <button class="px-3 py-1 text-xs border border-danger text-danger rounded hover:bg-danger/5 transition-colors">
+                                取消关注
+                            </button>
+                        </div>
+                        
+                        <!-- 关注话题 -->
+                        <div class="item-card p-3 rounded-lg border border-gray-100 flex items-center">
+                            <div class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center mr-3">
+                                <i class="fa fa-comments text-secondary"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h5 class="font-medium text-gray-800 text-sm">大语言模型前沿技术</h5>
+                                <p class="text-xs text-gray-500">128人关注 | 最新讨论: 今天</p>
+                            </div>
+                            <button class="px-3 py-1 text-xs border border-danger text-danger rounded hover:bg-danger/5 transition-colors">
+                                取消关注
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full mt-4 py-2 border border-secondary text-secondary rounded text-sm bg-white/80 hover:bg-secondary/5 transition-colors">
+                        查看全部关注
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+  
+</body>
+</html>
+    

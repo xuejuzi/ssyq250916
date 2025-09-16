@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问题求助与解答 - 学习社区</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        light: '#F5F7FA',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-image: url("css/beijing.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover; 
+            background-color: #f9fafb; 
+        }
+        
+        .question-item {
+            transition: all 0.3s ease;
+        }
+        .question-item:hover {
+            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .filter-tag {
+            transition: all 0.2s ease;
+        }
+        .filter-tag:hover, .filter-tag.active {
+            background-color: #36CFC9;
+            color: white;
+        }
+        
+        .pagination-btn {
+            transition: all 0.2s ease;
+        }
+        .pagination-btn:hover:not(.active):not(:disabled) {
+            border-color: #36CFC9;
+            color: #36CFC9;
+        }
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .solved-badge {
+            background-color: rgba(54, 207, 201, 0.2);
+            color: #36CFC9;
+        }
+        
+        .unsolved-badge {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="container mx-auto px-4 py-6">
+        <div class="flex items-center">
+            <i class="fa fa-question-circle text-secondary text-2xl mr-3"></i>
+            <span class="font-bold text-2xl text-secondary">问题求助与解答</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 pb-12">
+        
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-3">提出你的疑问，获取专业解答</h2>
+            <p class="text-gray-600">
+                遇到科研难题？在这里提问，来自各领域的专家和同行将为你提供帮助和解答，共同攻克研究难关。
+            </p>
+        </div>
+        
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-4 mb-6">
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm text-gray-600">问题分类：</span>
+                <span class="filter-tag active px-3 py-1 bg-light text-sm rounded-full cursor-pointer">全部问题</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">研究方法</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">软件工具</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">论文写作</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">投稿发表</span>
+                <span class="filter-tag px-3 py-1 bg-light text-sm rounded-full cursor-pointer">数据处理</span>
+            </div>
+        </div>
+        
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-5 mb-6">
+            <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                <i class="fa fa-question-circle text-secondary mr-2"></i>我要提问
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div class="md:col-span-3">
+                    <label class="block text-xs text-gray-500 mb-1">问题标题</label>
+                    <input type="text" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-secondary" placeholder="请清晰描述你的问题，包含关键信息">
+                </div>
+                <div class="md:col-span-3">
+                    <label class="block text-xs text-gray-500 mb-1">问题详情</label>
+                    <textarea class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-secondary" rows="4" placeholder="请详细描述你的问题背景、已尝试的解决方法和具体困惑..."></textarea>
+                </div>
+                <div class="md:col-span-1">
+                    <label class="block text-xs text-gray-500 mb-1">问题分类</label>
+                    <select class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-secondary">
+                        <option>请选择分类</option>
+                        <option>研究方法</option>
+                        <option>软件工具</option>
+                        <option>论文写作</option>
+                        <option>投稿发表</option>
+                        <option>数据处理</option>
+                    </select>
+                </div>
+                <div class="md:col-span-1">
+                    <label class="block text-xs text-gray-500 mb-1">上传截图/附件（可选）</label>
+                    <div class="flex items-center">
+                        <input type="file" class="hidden" id="fileUpload">
+                        <label for="fileUpload" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 cursor-pointer text-gray-600 hover:border-secondary">
+                            <i class="fa fa-upload mr-1"></i> 选择文件
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button class="px-4 py-2 bg-secondary text-white text-sm rounded hover:bg-secondary/90 transition-colors">
+                    <i class="fa fa-paper-plane mr-1"></i> 提交问题
+                </button>
+            </div>
+        </div>
+        
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden">
+            <div class="bg-secondary/10 px-5 py-3 border-b border-secondary/20">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-secondary flex items-center">
+                        <i class="fa fa-question-circle-o mr-2"></i>问题求助与解答
+                    </h3>
+                    <div class="flex space-x-2">
+                        <button class="text-xs text-secondary hover:underline"><i class="fa fa-sort-amount-desc mr-1"></i>最新</button>
+                        <button class="text-xs text-gray-500 hover:text-secondary"><i class="fa fa-check-circle mr-1"></i>未解决</button>
+                        <button class="text-xs text-gray-500 hover:text-secondary"><i class="fa fa-comment mr-1"></i>回答最多</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-5">
+                <div id="questionList" class="space-y-4">
+                </div>
+                
+                <div class="flex justify-center mt-6">
+                    <div class="flex space-x-1" id="paginationControls">
+                        <button id="prevPage" class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500" disabled>
+                            <i class="fa fa-angle-left"></i>
+                        </button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded bg-secondary text-white active" data-page="1">1</button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200" data-page="2">2</button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200" data-page="3">3</button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200" data-page="4">4</button>
+                        <button class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200" data-page="5">5</button>
+                        <button id="nextPage" class="pagination-btn w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-500">
+                            <i class="fa fa-angle-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                goToPage(1); 
+            });
+        });
+        
+        let currentPage = 1;
+        const totalPages = 5;
+        const questionsPerPage = 4;
+        
+        const questionData = [
+            
+            [
+                {
+                    title: "如何高效处理实验数据中的异常值？",
+                    author: "赵同学",
+                    time: "5小时前",
+                    answers: 7,
+                    views: 156,
+                    solved: true,
+                    tags: ["数据处理", "统计学"]
+                },
+                {
+                    title: "EndNote如何批量修改文献格式？求详细步骤",
+                    author: "陈同学",
+                    time: "1天前",
+                    answers: 4,
+                    views: 217,
+                    solved: true,
+                    tags: ["EndNote", "文献管理"]
+                },
+                {
+                    title: "如何确定研究选题的创新性和可行性？",
+                    author: "刘同学",
+                    time: "2天前",
+                    answers: 12,
+                    views: 328,
+                    solved: false,
+                    tags: ["选题技巧", "研究设计"]
+                },
+                {
+                    title: "SPSS与R语言在数据分析中的优缺点对比？",
+                    author: "孙同学",
+                    time: "2天前",
+                    answers: 8,
+                    views: 196,
+                    solved: true,
+                    tags: ["数据分析", "软件工具"]
+                }
+            ],
+            
+            [
+                {
+                    title: "如何撰写高质量的文献综述？有哪些实用技巧？",
+                    author: "周同学",
+                    time: "3天前",
+                    answers: 9,
+                    views: 275,
+                    solved: true,
+                    tags: ["论文写作", "文献综述"]
+                },
+                {
+                    title: "SCI论文投稿后一般多久会收到审稿意见？",
+                    author: "吴同学",
+                    time: "3天前",
+                    answers: 5,
+                    views: 189,
+                    solved: true,
+                    tags: ["投稿发表", "SCI"]
+                },
+                {
+                    title: "质性研究中访谈提纲设计的注意事项？",
+                    author: "郑同学",
+                    time: "4天前",
+                    answers: 6,
+                    views: 143,
+                    solved: false,
+                    tags: ["质性研究", "研究方法"]
+                },
+                {
+                    title: "如何使用Python进行数据可视化？推荐哪些库？",
+                    author: "冯同学",
+                    time: "4天前",
+                    answers: 11,
+                    views: 231,
+                    solved: true,
+                    tags: ["Python", "数据可视化"]
+                }
+            ],
+            
+            [
+                {
+                    title: "论文被拒后如何修改才能提高录用率？",
+                    author: "韩同学",
+                    time: "5天前",
+                    answers: 7,
+                    views: 268,
+                    solved: true,
+                    tags: ["投稿发表", "论文修改"]
+                },
+                {
+                    title: "如何有效管理和组织大量的参考文献？",
+                    author: "杨同学",
+                    time: "1周前",
+                    answers: 8,
+                    views: 215,
+                    solved: true,
+                    tags: ["文献管理", "科研效率"]
+                },
+                {
+                    title: "混合研究方法的设计与实施步骤是什么？",
+                    author: "朱同学",
+                    time: "1周前",
+                    answers: 4,
+                    views: 132,
+                    solved: false,
+                    tags: ["研究方法", "混合研究"]
+                },
+                {
+                    title: "Zotero与Mendeley哪个更适合社会科学研究者？",
+                    author: "胡同学",
+                    time: "1周前",
+                    answers: 9,
+                    views: 178,
+                    solved: true,
+                    tags: ["文献管理", "软件工具"]
+                }
+            ],
+            
+            [
+                {
+                    title: "如何处理研究中的缺失数据？有哪些常用方法？",
+                    author: "马同学",
+                    time: "1周前",
+                    answers: 6,
+                    views: 165,
+                    solved: true,
+                    tags: ["数据处理", "统计学"]
+                },
+                {
+                    title: "学术论文中图表的规范格式与制作技巧？",
+                    author: "郭同学",
+                    time: "2周前",
+                    answers: 7,
+                    views: 203,
+                    solved: true,
+                    tags: ["论文写作", "图表制作"]
+                },
+                {
+                    title: "如何查找与自己研究相关的高影响因子期刊？",
+                    author: "何同学",
+                    time: "2周前",
+                    answers: 5,
+                    views: 187,
+                    solved: true,
+                    tags: ["投稿发表", "期刊选择"]
+                },
+                {
+                    title: "NVivo分析访谈数据的基本流程是什么？",
+                    author: "高同学",
+                    time: "2周前",
+                    answers: 3,
+                    views: 124,
+                    solved: false,
+                    tags: ["质性研究", "NVivo"]
+                }
+            ],
+            
+            [
+                {
+                    title: "如何撰写清晰、有说服力的研究假设？",
+                    author: "林同学",
+                    time: "2周前",
+                    answers: 6,
+                    views: 156,
+                    solved: true,
+                    tags: ["研究设计", "论文写作"]
+                },
+                {
+                    title: "如何应对审稿人的负面意见或质疑？",
+                    author: "罗同学",
+                    time: "3周前",
+                    answers: 8,
+                    views: 243,
+                    solved: true,
+                    tags: ["投稿发表", "审稿回应"]
+                },
+                {
+                    title: "使用AMOS进行结构方程模型分析的常见问题？",
+                    author: "梁同学",
+                    time: "3周前",
+                    answers: 4,
+                    views: 132,
+                    solved: false,
+                    tags: ["数据分析", "结构方程模型"]
+                },
+                {
+                    title: "如何提高学术论文的引用率？有哪些有效策略？",
+                    author: "宋同学",
+                    time: "3周前",
+                    answers: 7,
+                    views: 198,
+                    solved: true,
+                    tags: ["学术传播", "论文影响力"]
+                }
+            ]
+        ];
+        
+        function initPagination() {
+            
+            document.querySelectorAll('.pagination-btn[data-page]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = parseInt(this.getAttribute('data-page'));
+                    goToPage(page);
+                });
+            });
+            
+            document.getElementById('prevPage').addEventListener('click', () => {
+                if (currentPage > 1) goToPage(currentPage - 1);
+            });
+            
+            document.getElementById('nextPage').addEventListener('click', () => {
+                if (currentPage < totalPages) goToPage(currentPage + 1);
+            });
+            
+            renderQuestionList();
+            updatePaginationState();
+        }
+        
+        function goToPage(page) {
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            renderQuestionList();
+            updatePaginationState();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function updatePaginationState() {
+            
+            document.querySelectorAll('.pagination-btn[data-page]').forEach(btn => {
+                const page = parseInt(btn.getAttribute('data-page'));
+                if (page === currentPage) {
+                    btn.classList.add('bg-secondary', 'text-white', 'active');
+                    btn.classList.remove('border', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-secondary', 'text-white', 'active');
+                    btn.classList.add('border', 'border-gray-200');
+                }
+            });
+            
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+            
+            prevBtn.classList.toggle('opacity-50', currentPage === 1);
+            prevBtn.classList.toggle('cursor-not-allowed', currentPage === 1);
+            nextBtn.classList.toggle('opacity-50', currentPage === totalPages);
+            nextBtn.classList.toggle('cursor-not-allowed', currentPage === totalPages);
+        }
+        
+        function renderQuestionList() {
+            const listContainer = document.getElementById('questionList');
+            listContainer.innerHTML = '';
+            
+            const currentQuestions = questionData[currentPage - 1];
+            
+            currentQuestions.forEach(question => {
+                const statusBadge = question.solved 
+                    ? `<span class="solved-badge text-xs px-2 py-0.5 rounded-full"><i class="fa fa-check-circle mr-1"></i>已解决</span>`
+                    : `<span class="unsolved-badge text-xs px-2 py-0.5 rounded-full"><i class="fa fa-exclamation-circle mr-1"></i>未解决</span>`;
+                    
+                const questionHTML = `
+                <div class="question-item p-4 rounded-lg border border-gray-100">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                            <i class="fa fa-user text-secondary"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between">
+                                <h4 class="font-medium text-gray-800 hover:text-secondary cursor-pointer transition-colors">
+                                    ${question.title}
+                                </h4>
+                                ${statusBadge}
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">
+                                这位同学遇到了关于${question.title}的问题，希望得到专业的解答和建议...
+                            </p>
+                            <div class="flex flex-wrap items-center mt-3 gap-x-4 gap-y-2">
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <span><i class="fa fa-user mr-1"></i> ${question.author}</span>
+                                    <span class="mx-2">•</span>
+                                    <span><i class="fa fa-clock-o mr-1"></i> ${question.time}</span>
+                                </div>
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <span><i class="fa fa-eye mr-1"></i> ${question.views}浏览</span>
+                                    <span class="mx-2">•</span>
+                                    <span><i class="fa fa-comment mr-1"></i> ${question.answers}个解答</span>
+                                </div>
+                                <div class="flex flex-wrap gap-1 ml-auto">
+                                    ${question.tags.map(tag => `<span class="px-2 py-0.5 bg-light/80 text-gray-600 text-xs rounded">${tag}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+                listContainer.innerHTML += questionHTML;
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', initPagination);
+    </script>
+</body>
+</html>

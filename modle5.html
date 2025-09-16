@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习管理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        light: '#F5F7FA',
+                        success: '#52C41A',
+                        warning: '#FAAD14',
+                        danger: '#FF4D4F'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* 背景图配置，与其他页面保持一致 */
+        body {
+            background-image: url("css/beijing.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover; 
+            background-color: #f9fafb; 
+        }
+        /* 若本地背景图路径错误，可注释上方body样式，启用下方在线图 */
+        /* body {
+            background-image: url("https://picsum.photos/id/20/1920/1080");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        } */
+        
+        /* 任务项样式 */
+        .task-item {
+            transition: all 0.2s ease;
+        }
+        .task-item:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* 进度条动画 */
+        @keyframes progress {
+            from { width: 0; }
+            to { width: var(--progress-width); }
+        }
+        .progress-animate {
+            animation: progress 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 顶部标题区域 -->
+    <header class="container mx-auto px-4 py-6">
+        <div class="flex items-center">
+            <i class="fa fa-graduation-cap text-primary text-2xl mr-3"></i>
+            <span class="font-bold text-2xl text-primary">学习管理</span>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="container mx-auto px-4 pb-12">
+        <!-- 学习管理介绍 -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-3">高效规划，科学管理</h2>
+            <p class="text-gray-600">
+                制定个性化学习计划，跟踪学习进度，合理安排时间，提高学习效率，
+                助您达成学习目标。
+            </p>
+        </div>
+        
+        <!-- 学习概览统计 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- 总体进度 -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-5">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="font-bold text-gray-800">总体进度</h3>
+                    <span class="text-primary font-medium">68%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                    <div class="bg-primary h-2.5 rounded-full progress-animate" style="--progress-width: 68%"></div>
+                </div>
+                <p class="text-sm text-gray-600">
+                    <i class="fa fa-check-circle text-success mr-1"></i> 已完成 17 项任务
+                    <span class="mx-2">•</span>
+                    <i class="fa fa-clock-o text-warning mr-1"></i> 进行中 8 项任务
+                </p>
+            </div>
+            
+            <!-- 本周学习 -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-5">
+                <h3 class="font-bold text-gray-800 mb-4">本周学习</h3>
+                <div class="h-32">
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- 学习目标 -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-5">
+                <h3 class="font-bold text-gray-800 mb-4">学习目标</h3>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>完成论文阅读</span>
+                            <span>8/10</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-success h-2 rounded-full progress-animate" style="--progress-width: 80%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>实验数据收集</span>
+                            <span>3/5</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-warning h-2 rounded-full progress-animate" style="--progress-width: 60%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>编程技能提升</span>
+                            <span>2/6</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-danger h-2 rounded-full progress-animate" style="--progress-width: 33%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主要功能区 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- 学习计划制定 -->
+            <div class="lg:col-span-1 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-primary/10 px-5 py-3 border-b border-primary/20">
+                    <h3 class="font-bold text-primary flex items-center">
+                        <i class="fa fa-calendar-plus-o mr-2"></i>制定学习计划
+                    </h3>
+                </div>
+                
+                <div class="p-5">
+                    <form>
+                        <div class="mb-3">
+                            <label class="block text-xs text-gray-500 mb-1">计划名称</label>
+                            <input type="text" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary" placeholder="例如：机器学习基础学习">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="block text-xs text-gray-500 mb-1">学习目标</label>
+                            <textarea class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary" rows="2" placeholder="描述您希望通过该计划达成的学习目标"></textarea>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <div>
+                                <label class="block text-xs text-gray-500 mb-1">开始日期</label>
+                                <input type="date" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 mb-1">预计完成日期</label>
+                                <input type="date" class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-xs text-gray-500 mb-1">学习任务</label>
+                            <div class="flex gap-2">
+                                <input type="text" class="flex-1 p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary" placeholder="添加具体学习任务">
+                                <button type="button" class="p-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="w-full py-2 bg-primary text-white text-sm rounded hover:bg-primary/90 transition-colors">
+                            保存学习计划
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- 学习进度跟踪 -->
+            <div class="lg:col-span-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-secondary/10 px-5 py-3 border-b border-secondary/20">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-secondary flex items-center">
+                            <i class="fa fa-line-chart mr-2"></i>学习进度跟踪
+                        </h3>
+                        <select class="text-xs border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-secondary px-2 py-1">
+                            <option>全部计划</option>
+                            <option>进行中计划</option>
+                            <option>已完成计划</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="p-5">
+                    <!-- 进行中的计划 -->
+                    <div class="mb-6">
+                        <h4 class="font-medium text-gray-800 mb-3">进行中的计划</h4>
+                        
+                        <!-- 计划1 -->
+                        <div class="mb-4 p-3 border border-gray-100 rounded-lg">
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-medium text-primary">自然语言处理基础学习</h5>
+                                <span class="text-xs bg-warning/10 text-warning px-2 py-0.5 rounded">进行中</span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span>总体进度</span>
+                                    <span>6/10 任务 (60%)</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-warning h-2 rounded-full progress-animate" style="--progress-width: 60%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-xs text-gray-500 mb-3">
+                                <span><i class="fa fa-calendar mr-1"></i> 2023-05-10 至 2023-06-30</span>
+                            </div>
+                            
+                            <div class="space-y-2 max-h-40 overflow-y-auto pr-1">
+                                <!-- 任务项1 -->
+                                <div class="task-item flex items-center p-2 bg-gray-50 rounded">
+                                    <input type="checkbox" checked class="mr-2 text-primary">
+                                    <span class="text-sm line-through text-gray-400 flex-1">阅读《自然语言处理综述》论文</span>
+                                    <span class="text-xs text-gray-400">5月15日</span>
+                                </div>
+                                
+                                <!-- 任务项2 -->
+                                <div class="task-item flex items-center p-2 bg-gray-50 rounded">
+                                    <input type="checkbox" checked class="mr-2 text-primary">
+                                    <span class="text-sm line-through text-gray-400 flex-1">学习分词与词性标注基础</span>
+                                    <span class="text-xs text-gray-400">5月20日</span>
+                                </div>
+                                
+                                <!-- 任务项3 -->
+                                <div class="task-item flex items-center p-2 bg-gray-50 rounded">
+                                    <input type="checkbox" class="mr-2 text-primary">
+                                    <span class="text-sm flex-1">实践词向量模型训练</span>
+                                    <span class="text-xs text-gray-600">进行中</span>
+                                </div>
+                                
+                                <!-- 任务项4 -->
+                                <div class="task-item flex items-center p-2 bg-gray-50 rounded">
+                                    <input type="checkbox" class="mr-2 text-primary">
+                                    <span class="text-sm flex-1">学习Transformer模型原理</span>
+                                    <span class="text-xs text-gray-500">未开始</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 计划2 -->
+                        <div class="p-3 border border-gray-100 rounded-lg">
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-medium text-primary">Python数据分析技能提升</h5>
+                                <span class="text-xs bg-warning/10 text-warning px-2 py-0.5 rounded">进行中</span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span>总体进度</span>
+                                    <span>3/8 任务 (37.5%)</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-warning h-2 rounded-full progress-animate" style="--progress-width: 37.5%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-xs text-gray-500 mb-3">
+                                <span><i class="fa fa-calendar mr-1"></i> 2023-05-20 至 2023-07-10</span>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <!-- 任务项 -->
+                                <div class="task-item flex items-center p-2 bg-gray-50 rounded">
+                                    <input type="checkbox" class="mr-2 text-primary">
+                                    <span class="text-sm flex-1">学习Pandas高级数据处理</span>
+                                    <span class="text-xs text-gray-600">进行中</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 已完成的计划 -->
+                    <div>
+                        <h4 class="font-medium text-gray-800 mb-3">已完成的计划</h4>
+                        
+                        <!-- 计划3 -->
+                        <div class="p-3 border border-gray-100 rounded-lg">
+                            <div class="flex justify-between items-start mb-2">
+                                <h5 class="font-medium text-gray-600">文献管理工具学习</h5>
+                                <span class="text-xs bg-success/10 text-success px-2 py-0.5 rounded">已完成</span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span>总体进度</span>
+                                    <span>5/5 任务 (100%)</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-success h-2 rounded-full progress-animate" style="--progress-width: 100%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-xs text-gray-500">
+                                <span><i class="fa fa-calendar mr-1"></i> 2023-04-01 至 2023-04-15</span>
+                                <span class="mx-2">•</span>
+                                <span><i class="fa fa-check-circle mr-1"></i> 提前2天完成</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 初始化本周学习图表
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('weeklyChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                    datasets: [{
+                        label: '学习时长(小时)',
+                        data: [2.5, 1.8, 3.2, 2.1, 4.0, 2.7, 1.5],
+                        backgroundColor: '#165DFF',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+    

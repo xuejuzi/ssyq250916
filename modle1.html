@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术动态</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        light: '#F5F7FA',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-image: url("css/beijing.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover; 
+            background-color: #f9fafb; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-6">
+        <div class="flex items-center">
+            <i class="fa fa-book text-primary text-2xl mr-3"></i>
+            <span class="font-bold text-2xl text-primary">学术动态</span>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-2">
+        <div class="mb-6">
+            <h1 class="text-xl font-bold text-gray-800 mb-3">热点文献推荐</h1>
+            <p class="text-gray-600"> 
+                基于您的研究方向，智能筛选近期高频引用的优质文献
+            </p>
+        </div>
+        
+        <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-4 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">学科领域</label>
+                    <select class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                        <option>文学</option>
+                        <option>历史学</option>
+                        <option>哲学</option>
+                        <option>经济学</option>
+                        <option>法学</option>
+                        <option>理学</option>
+                        <option>工学</option>
+                        <option>医学</option>
+                        <option>教育学</option>
+                        <option>艺术学</option>
+                        <option>哲学</option>
+                        <option>其他</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">研究方向</label>
+                    <select class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                        <option>中国古代文学</option>
+                        <option>比较文学与世界文学</option>
+                        <option>中国古代史</option>
+                        <option>世界近现代史</option>
+                        <option>中国哲学</option>
+                        <option>西方哲学</option>
+                        <option>宏观经济学</option>
+                        <option>微观经济学</option>
+                        <option>民商法学</option>
+                        <option>刑法学</option>
+                        <option>数学</option>
+                        <option>物理学</option>
+                        <option>机械工程</option>
+                        <option>电子信息工程</option>
+                        <option>临床医学</option>
+                        <option>基础医学</option>
+                        <option>学前教育学</option>
+                        <option>高等教育学</option>
+                        <option>美术学</option>
+                        <option>音乐学</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">时间范围</label>
+                    <select class="w-full p-2 text-sm border border-gray-200 rounded bg-white/90 focus:outline-none focus:ring-1 focus:ring-primary">
+                        <option>近3个月</option>
+                        <option>近6个月</option>
+                        <option>近1年</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mt-4 flex justify-end">
+                <button class="px-4 py-2 bg-primary text-white text-sm rounded hover:bg-primary/90 transition-colors">
+                    <i class="fa fa-filter mr-1"></i> 筛选
+                </button>
+            </div>
+        </div>
+        
+        <div class="bg-white/30 backdrop-blur-sm rounded-lg border border-white/50 p-5 mb-6">
+            <div class="space-y-4">
+               
+                <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden hover:shadow transition-shadow">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded">高被引</span>
+                            <div class="text-xs text-gray-500">
+                                <i class="fa fa-quote-right mr-1"></i> 2,345 引用
+                            </div>
+                        </div>
+                        
+                        <h3 class="font-semibold mb-2 hover:text-primary cursor-pointer transition-colors">基于注意力机制的大型语言模型研究进展</h3>
+                        
+                        <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                            本文探讨了基于注意力机制的大型语言模型在自然语言处理领域的最新研究进展，分析了现有模型的局限性，并提出了未来可能的研究方向。
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="px-2 py-0.5 bg-light/80 text-gray-600 text-xs rounded">大语言模型</span>
+                            <span class="px-2 py-0.5 bg-light/80 text-gray-600 text-xs rounded">注意力机制</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center text-xs text-gray-500">
+                            <span>李明, 王华, 张伟 等</span>
+                            <span>2023-05-18</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-light/80 px-4 py-2 flex justify-between items-center text-xs">
+                        <div class="flex space-x-3">
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="fa fa-bookmark-o"></i> 收藏</button>
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="fa fa-download"></i> 下载</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden hover:shadow transition-shadow">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2 py-0.5 bg-secondary/10 text-secondary text-xs rounded">新发表</span>
+                            <div class="text-xs text-gray-500">
+                                <i class="fa fa-quote-right mr-1"></i> 567 引用
+                            </div>
+                        </div>
+                        
+                        <h3 class="font-semibold mb-2 hover:text-primary cursor-pointer transition-colors">多模态大模型的发展与跨模态语义理解</h3>
+                        
+                        <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                            本文分析了多模态大模型的发展历程和技术特点，重点研究了跨模态语义理解的关键技术和挑战，并通过实验验证了现有模型的性能表现。
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="px-2 py-0.5 bg-light/80 text-gray-600 text-xs rounded">多模态学习</span>
+                            <span class="px-2 py-0.5 bg-light/80 text-gray-600 text-xs rounded">跨模态理解</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center text-xs text-gray-500">
+                            <span>赵丽, 孙伟, 杨光 等</span>
+                            <span>2023-06-02</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-light/80 px-4 py-2 flex justify-between items-center text-xs">
+                        <div class="flex space-x-3">
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="fa fa-bookmark-o"></i> 收藏</button>
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="fa fa-download"></i> 下载</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden hover:shadow transition-shadow">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded">高被引</span>
+                            <div class="text-xs text-gray-500">
+                                <i class="fa fa-quote-right mr-1"></i> 3,289 引用
+                            </div>
+                        </div>
+                        
+                        <h3 class="font-semibold mb-2 hover:text-primary cursor-pointer transition-colors">联邦学习在医疗数据隐私保护中的应用</h3>
+                        
+                        <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                            本文探讨了联邦学习技术在医疗数据隐私保护中的应用场景和优势，分析了实际部署中面临的挑战，并提出了可能的解决方案。
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="px-2 py-0.5 bg-light/80 text-gray-600 text-xs rounded">联邦学习</span>
+                            <span class="px-2 py-0.5 bg-light/80 text-gray-600 text-xs rounded">隐私保护</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center text-xs text-gray-500">
+                            <span>王芳, 赵刚 等</span>
+                            <span>2023-03-15</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-light/80 px-4 py-2 flex justify-between items-center text-xs">
+                        <div class="flex space-x-3">
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="fa fa-bookmark-o"></i> 收藏</button>
+                            <button class="text-gray-500 hover:text-primary transition-colors"><i class="fa fa-download"></i> 下载</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-2 text-center">
+            <button class="px-6 py-2 border border-primary text-primary rounded text-sm bg-white/80 hover:bg-white/100 transition-colors">
+                加载更多
+            </button>
+        </div>
+    </main>
+  
+</body>
+</html>
+    
